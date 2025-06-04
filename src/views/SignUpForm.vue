@@ -13,12 +13,12 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-// ✅ Define a proper type for the user
 interface User {
   fullname: string;
   email: string;
@@ -31,7 +31,7 @@ const userDetails = ref<User>({
   password: '',
 });
 
-// ✅ Strictly type your allUsers array
+
 const allUsers = ref<User[]>([]);
 
 onMounted(() => {
@@ -47,10 +47,16 @@ function handleSubmit() {
     return;
   }
 
-  allUsers.value.push({ ...userDetails.value }); 
-  localStorage.setItem('allSignedUsers', JSON.stringify(allUsers.value));
+  allUsers.value.push({ ...userDetails.value });
+  // console.log({ ...userDetails.value });
+  // localStorage.setItem('allSignedUsers', JSON.stringify(allUsers.value));
 
-  alert('User created successfully');
+  axios.post('http://127.0.0.1:8000/api/register', {...userDetails.value})
+  .then((res)=>{res.data})
+  .catch((err)=>{console.log(err);
+  })
+
+  // alert('User created successfully');
   router.push('/login');
 }
 </script>

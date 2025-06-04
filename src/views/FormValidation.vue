@@ -1,14 +1,14 @@
 <template>
   <div class="mt-5">
     <form @submit.prevent="submitForm">
-      <input type="text" placeholder="Firstname" name="firstname" v-model="form.firstname">
+      <input type="text" placeholder="Firstname" v-model="form.firstname" />
       <div v-if="v$.form.firstname.$dirty">
         <div v-for="(error, index) in v$.form.firstname.$errors" :key="index">
           <p>{{ error.$message }}</p>
         </div>
       </div>
 
-      <input type="email" placeholder="Email Address" name="email" v-model="form.email">
+      <input type="email" placeholder="Email Address" v-model="form.email" />
       <div v-if="v$.form.email.$dirty">
         <div v-for="(error, index) in v$.form.email.$errors" :key="index">
           <p>{{ error.$message }}</p>
@@ -21,40 +21,40 @@
 </template>
 
 <script lang="ts">
+import { reactive } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, minLength, email } from '@vuelidate/validators'
-import { defineComponent } from 'vue'
 
-export default defineComponent({
-  data() {
-    return {
-      form: {
-        firstname: '',
-        email: ''
-      },
-      v$: {} as ReturnType<typeof useVuelidate>
-    }
-  },
-  validations() {
-    return {
+export default {
+  setup() {
+    const form = reactive({
+      firstname: '',
+      email: ''
+    })
+
+    const rules = {
       form: {
         firstname: { required, minLength: minLength(3) },
         email: { required, email }
       }
     }
-  },
-  created() {
-    this.v$ = useVuelidate()
-  },
-  methods: {
-    submitForm() {
-      this.v$.$touch()
-      if (this.v$.$invalid) {
+
+    const v$ = useVuelidate(rules, { form })
+
+    const submitForm = () => {
+      v$?.value.$touch()
+      if (v$?.value.$invalid) {
         console.log('form is invalid')
       } else {
         console.log('form is valid')
       }
     }
+
+    return {
+      form,
+      v$,
+      submitForm
+    }
   }
-})
+}
 </script>
