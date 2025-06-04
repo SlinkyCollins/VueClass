@@ -2,17 +2,13 @@
   <div class="container">
     <h2>Palindrome Checker 🔄</h2>
 
-    <input
-      v-model="text"
-      placeholder="Enter text"
-      class="form-control my-3"
-    />
+    <input v-model="text" placeholder="Enter text" class="form-control my-3" />
 
     <button class="btn btn-primary" @click="checkPalindrome">Check</button>
 
-    <p v-if="result !== null">
-      Is Palindrome?
-      <strong>{{ result ? 'Yes ✅' : 'No ❌' }}</strong>
+
+    <p v-if="result !== undefined">
+      Is Palindrome? <strong>{{ result ? 'Yes ✅' : 'No ❌' }}</strong>
     </p>
   </div>
 </template>
@@ -21,12 +17,18 @@
 import { ref } from 'vue'
 
 const text = ref('');
-const result = ref(null);
+const result = ref<boolean | undefined>()
 
 function checkPalindrome() {
   const clean = text.value.toLowerCase().replace(/[^a-z0-9]/g, '');
   const reversed = clean.split('').reverse().join('');
-  result.value = clean && clean === reversed;
+
+  if (!clean) {
+    result.value = undefined;
+    return;
+  }
+
+  result.value = clean === reversed;
 }
 </script>
 
