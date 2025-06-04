@@ -9,7 +9,7 @@ import ParentEvent from '@/views/ParentEvent.vue'
 import ChatParent from '@/views/ChatParent.vue'
 import PiniaComponent from '@/views/PiniaComponent.vue'
 import RegisterComponent from '@/views/RegisterComponent.vue'
-import Validation from '@/views/Validation.vue'
+import FormValidation from '@/views/FormValidation.vue'
 
 
 const router = createRouter({
@@ -107,7 +107,7 @@ const router = createRouter({
     {
       path: '/vuelidate',
       name: 'Vuelidate',
-      component: Validation,
+      component: FormValidation,
     },
     {
       path: '/:catchAll(.*)',
