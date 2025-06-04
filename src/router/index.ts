@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 // import SignupView from '@/views/SignupView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import SignUpForm from '@/views/SignUpForm.vue'
@@ -10,6 +9,7 @@ import ChatParent from '@/views/ChatParent.vue'
 import PiniaComponent from '@/views/PiniaComponent.vue'
 import RegisterComponent from '@/views/RegisterComponent.vue'
 import FormValidation from '@/views/FormValidation.vue'
+import HomeComponent from '@/views/HomeComponent.vue';
 
 
 const router = createRouter({
@@ -18,7 +18,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeComponent,
     },
     {
       path: '/about',
